@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static',filename='demo.css') }}">
+        <title>Hello, world!</title>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-size: 1.6rem;">
+            <a class="navbar-brand" href="#">BMT</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Service</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="container" id="main-content">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="left-col">
+                        <h1>News and Updates</h1>
+                        <p class="left-col-content">
+                            Like all things at BMT, our focus is on bringing customers the best selection in grocery, at the best prices, with
+                            convenient and safe options for both online and offline shopping. In the last year, we’ve focused on bringing our
+                            grocery services to even more customers through the introduction of Amazon Fresh grocery stores, the expansion of
+                            grocery pickup to all Whole Foods Market stores nationwide, and more. We’re humbled to be recognized as a retailer with
+                            customers top of mind.
+                        </p>
+                        <p class="left-col-content">
+                            Since the onset of the pandemic, safety has remained our top priority. Across Amazon we’ve invested $10B in safety
+                            measures, including in personal protective equipment for employees and customers, enhanced cleaning of our facilities,
+                            process paths that better allow for effective social distancing, and more. We’ve also instituted health and safety
+                            measures in our stores, including plexiglass barriers between cashiers and customers at checkout, restricting the number
+                            of customers and employees allowed in the store at one time, and directing customer traffic flow through one-way aisles.
+                            And for customers 60 years and older, we introduced dedicated hours for in-store shopping and grocery pickup.
+                        </p>
+                        <p class="left-col-content">
+                            This top ranking follows surveys from Ipsos and Magid that found Amazon to be the top food retailer throughout the
+                            COVID-19 pandemic. We’re proud that Dunnhumby’s RPI has recognized the incredible work our employees do every day on
+                            behalf of our customers.
+                        </p>
+                    </div>
+                    
+                </div>
+                <div class="col">
+                    <div class='right-col'>
+                        <p>
+                            This is an insecurely coded SQL login page. Since its web developer coded it badly, it's vulnerable to SQL injection attacks.
+                        </p>
+                        <b>SELECT * FROM Users WHERE Username='{0}' AND Password='{1}'</b>
+                        <form style="margin-top: 2rem;" action="/login" method="POST">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">username</label>
+                                {% if username != '' %}
+                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                    placeholder="username" name="username" value={{username}}>
+                                {% else %}
+                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="username"
+                                    name="username">
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">password</label>
+                                
+                                {% if username != '' %}
+                                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password" value={{password}}>
+                                {% else %}
+                                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+                                {% endif %}
+                            </div>
+                            {% if result %}
+                                <small id="emailHelp" class="form-text text-muted">Result: <span style="color:green"><b>Login Successfully</b></span></small>
+                            {% elif result == False %}
+                                <small id="emailHelp" class="form-text text-muted">Result: <span style="color:red"><b>Invalid username or password</b></span></small>
+                            {% endif %}
+                            {% if show_order == False %}
+                            <button type="submit" class="btn btn-lg btn-primary">Login</button>
+                            {% endif %}
+                        </form>
+                        <div style="margin-top: 2rem;">
+                            {% if show_order %}
+                            <p>
+                                Below is your order history, including Credit card number and order amount
+                            </p>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Amount</th>
+                                        <th scope="col">Credit Card</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {%for i, e in order_history%}
+                                    <tr>
+                                        <th scope="row">{{i + 1}}</th>
+                                        <td>{{e[0]}}</td>
+                                        <td>{{e[1]}}</td>
+                                        <td>{{e[2]}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <form action="/logout" method="GET">
+                                <button type='submit' class="btn btn-lg btn-warning">Logout</button>
+                            </form>
+                            
+                            {% endif %}
+                        </div>
+                        
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    </body>
+
+</html>
